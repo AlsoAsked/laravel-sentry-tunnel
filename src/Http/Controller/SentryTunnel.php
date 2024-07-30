@@ -74,6 +74,7 @@ class SentryTunnel extends Controller
         }
 
         return Http::withBody($envelope, 'application/x-sentry-envelope')
+            ->withHeader('X-Fowarded-For', $request->ip())
             ->post('https://' . $dsn['host'] . "/api/{$projectId}/envelope/?sentry_key=" . $dsn['user'])
         ;
     }
